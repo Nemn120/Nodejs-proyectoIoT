@@ -8,6 +8,7 @@ const app = express();
 var path = require('path');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
+
 hbs.registerPartials(path.join(__dirname, "../", "/views/parciales"));
 
 app.set('view engine', 'hbs');
