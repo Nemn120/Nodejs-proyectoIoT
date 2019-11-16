@@ -1,0 +1,146 @@
+{{> header}}
+
+    {{> navbar }}
+   <header class="bg-success py-5 mb-5">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-12">
+                    <h1 class="display-4 text-white mt-5 mb-2">Conectando cosas para transformar el mundo </h1>
+                    <p class="lead mb-5 text-white-50">IoT es la evolución de internet. En 2020 habrá 4 veces más dispositivos conectados a internet que personas.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 mb-5">
+                <h2>¿Cómo esta el Clima hoy?</h2>
+                <hr>
+                <!--<div class="row justify-content-center align-self-center">-->
+
+
+                <div class="card mb-4" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <canvas id="myChart" width="540" height="600"></canvas>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title" id="temperature"></h4>
+                                <p class="card-text">Temperatura Obtenida del Sensor DHT22.</p>
+                                <p class="card-text"><small class="text-muted">Datos en tiempo real</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card mb-4" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <canvas id="myCharts" width="540" height="600"></canvas>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title" id="humedad"></h4>
+                                <p class="card-text">Humedad Obtenida del Sensor DHT22</p>
+                                <p class="card-text"><small class="text-muted">Datos en tiempo real</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <p>Nuestro compromiso es impulsar el crecimiento optimizando la calidad, productividad y fiabilidad a la vez que reducir riesgos y costes que permitirán mejorar las relaciones con clientes y ciudadanos a través de una propuesta de valor diferenciada.</p>
+
+                <a class="btn btn-primary btn-lg" href="#">Mas información! &raquo;</a>
+            </div>
+
+
+
+            <div class="col-sm-4 mb-5">
+                <h2>Contáctanos</h2>
+                <hr>
+                <img src="recurso/Gogreen.png" width="250" height="200">
+
+                <address>
+                  <strong>Inicia una aventura IoT con nosotros</strong>
+                  <br>3481 San Marcos
+                  <br>Lima Cercado
+                  <br>
+                </address>
+                <address>
+                  <abbr title="Phone">P:</abbr>
+                  (52) 456-7890
+                  <br>
+                  <abbr title="Email">E:</abbr>
+                  <a href="mailto:#">solucionesIoT@gogreen.com</a>
+                </address>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top" src="recurso/iot.jpg" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">Agricultura Inteligente</h4>
+                        <p class="card-text">Soluciones centradas en pronostico y monitoreo de las condiciones climaticas.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Mas información!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top" src="recurso/celliot.jpg" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">Visualiza tus datos en tiempo real</h4>
+                        <p class="card-text">Con Gogreen visualiza tus datos desde cualquier lugar.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Mas información!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top" src="recurso/agricultura.jpg" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">GoGreen te permite prevenir enfermedades</h4>
+                        <p class="card-text">Mejora tu competitividad como agricultor.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Mas información!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /.row -->
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.0/dist/Chart.min.js"></script>
+    <canvas id="myCanvas"></canvas>
+
+
+
+
+
+    </div>
+    </div>
+   {{> footer }}
+ <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>

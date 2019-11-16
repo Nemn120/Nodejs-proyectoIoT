@@ -9,8 +9,6 @@ let rolesValidos = {
 
 
 let Schema = mongoose.Schema;
-
-
 let usuarioSchema = new Schema({
     nombre: {
         type: String,
@@ -34,6 +32,12 @@ let usuarioSchema = new Schema({
         default: 'USER_ROLE',
         enum: rolesValidos
     },
+    cultivo: [{
+        type: Schema.Types.ObjectId,
+        ref: "cultivo"
+    }],
+
+
     estado: {
         type: Boolean,
         default: true

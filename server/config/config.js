@@ -31,9 +31,9 @@ process.env.SEED = process.env.SEED || 'secret';
 let urlDB;
 
 //if (process.env.NODE_ENV === 'dev') {
-//  urlDB = 'mongodb://localhost:27017/cafe';
+urlDB = 'mongodb://localhost:27017/cafe';
 //} else {
 // urlDB = process.env.MONGO_URI;
-urlDB = 'mongodb+srv://user:4ozvRkeatvDCUfPf@cluster0-tzeao.mongodb.net/cafe?retryWrites=true&w=majority';
+//urlDB = 'mongodb+srv://user:4ozvRkeatvDCUfPf@cluster0-tzeao.mongodb.net/cafe?retryWrites=true&w=majority';
 //}
 process.env.URLDB = urlDB;
