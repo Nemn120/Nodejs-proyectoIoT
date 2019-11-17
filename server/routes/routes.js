@@ -4,12 +4,13 @@ const app = express();
 
 
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
     res.render('home', {
         anio: new Date().getFullYear()
     });
 
 });
+*/
 app.get('/about', (req, res) => {
     res.render('about', {
         anio: new Date().getFullYear()
@@ -22,4 +23,6 @@ app.get('/services', (req, res) => {
     });
 
 });
+
+
 module.exports = app;

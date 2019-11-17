@@ -5,25 +5,54 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const socketIO = require('socket.io');
 const app = express();
+const flash = require('connect-flash');
 var path = require('path');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
-
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const morgan = require('morgan');
+const session = require('express-session');
 hbs.registerPartials(path.join(__dirname, "../", "/views/parciales"));
 
 app.set('view engine', 'hbs');
+require('./config/local-auth');
 
+//app.engine('ejs', engine);
+//app.set('view engine', 'ejs');
 
+app.use(cookieParser());
 app.use(express.static(__dirname));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 
 // Configuración global de rutas
+//app.use(require('./config/local-auth'));
 app.use(require('./routes/index'));
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'mysecretsession',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+    app.locals.signinMessage = req.flash('signinMessage');
+    app.locals.signupMessage = req.flash('signupMessage');
+    app.locals.user = req.user;
+    console.log(app.locals)
+    next();
+});
+
+app.use('/', require('./routes/sig'));
 // conectando a la bd
 mongoose.connect(process.env.URLDB, (err, res) => {
 
@@ -32,7 +61,6 @@ mongoose.connect(process.env.URLDB, (err, res) => {
     console.log('Base de datos ONLINE');
 
 });
-
 
 
 /*app.listen(process.env.PORT, () => {

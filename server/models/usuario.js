@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-
+const bcrypt = require('bcrypt-nodejs');
 
 let rolesValidos = {
     values: ['ADMIN_ROLE', 'USER_ROLE'],
@@ -48,7 +48,6 @@ let usuarioSchema = new Schema({
     }
 });
 
-
 usuarioSchema.methods.toJSON = function() {
 
     let user = this;
@@ -58,8 +57,16 @@ usuarioSchema.methods.toJSON = function() {
     return userObject;
 }
 
+usuarioSchema.methods.encryptPassword = (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
 
-usuarioSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser único' });
+usuarioSchema.methods.comparePassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
+
+
+//usuarioSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser único' });
 
 
 module.exports = mongoose.model('Usuario', usuarioSchema);
