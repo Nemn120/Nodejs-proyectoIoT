@@ -4,7 +4,7 @@ const flash = require('connect-flash');
 const User = require('../models/usuario');
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
 });
 
 passport.deserializeUser(async(id, done) => {
@@ -62,8 +62,6 @@ passport.use('local-signin', new LocalStrategy({
 
     //try {const user = await
     User.findOne({ email: email }, (err, usuarioDB) => {
-        console.log(usuarioDB.email);
-        console.log(usuarioDB.password);
         if (err) {
 
             return res.status(500).json({

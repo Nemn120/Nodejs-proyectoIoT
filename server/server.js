@@ -13,10 +13,13 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const morgan = require('morgan');
 const session = require('express-session');
+
 hbs.registerPartials(path.join(__dirname, "../", "/views/parciales"));
 
 app.set('view engine', 'hbs');
 require('./config/local-auth');
+
+
 
 //app.engine('ejs', engine);
 //app.set('view engine', 'ejs');
@@ -24,12 +27,13 @@ require('./config/local-auth');
 app.use(cookieParser());
 app.use(express.static(__dirname));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-
+const personaForm = require('./routes/usuarioForm');
+app.use('/usuarioForm', personaForm);
 // Configuración global de rutas
 //app.use(require('./config/local-auth'));
 app.use(require('./routes/index'));

@@ -36,6 +36,11 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/');
 });
 
+router.get('/admin/panel', isAuthenticated, (req, res, next) => {
+    res.render('admin/panel');
+});
+
+
 
 function isAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
