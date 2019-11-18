@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NodeJs Temperatura</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="css/business-frontpage.css" rel="stylesheet">
+    <link href="vendor/style.css" rel="stylesheet">
+
+
+</head>
+<body>
+  {{> navbar }}
+  <br>
+    <br>
+       <div class="card-header bg-success text-white" text="Listado de Usuarios">
+         <br>
+         <span>MODIFICAR USUARIO: {{persona.nombre}}</span>
+       </div>
+
+
+    <br />
+    <!-- Importante indicar el path donde se encuentra el metodo POST -->
+    <div class="container py-4 ">
+		<div class="card bg-dark text-white">
+          
+            <div class="card-body">
+    <form action="/usuarioForm/usuario/operar" method="POST">
+ 
+        <input type="hidden" name="_id" value="{{persona._id}}"/>
+        <div class="form-group">
+            <label  class="col-sm-2 col-form-label" for="Nombres">Nombres:</label>
+            <div class="col-sm-6">
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{persona.nombre}}">
+            </div>
+        </div>
+          <div class="form-group">
+            <label  class="col-sm-2 col-form-label" for="Apellidos">Apellidos:</label>
+            <div class="col-sm-6">
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{persona.apellido}}">
+            </div>
+        </div>
+       
+         <div class="form-group">
+            <label   class="col-sm-2 col-form-label"  for="Email">Email:</label>
+            <div class="col-sm-6">
+            <input type="email" class="form-control" id="email" name="email" value="{{persona.email}}">
+         </div>
+        </div>
+ 
+        <button type="submit" class="btn btn-primary">Aceptar</button>
+        <a href="/usuario/listar" class="btn btn-danger">Cancelar</a>
+    </form>
+		</div>
+    </div>
+    </div>
+</div> 
+</div>
+  
+<br>
+{{> footer}}
