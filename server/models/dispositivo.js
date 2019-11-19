@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const cultivoSchema = new Schema({
+const dispositivoSchema = new Schema({
 
     nombre: {
         type: String,
-
-    }
+    },
+    posicion: String,
+    data: [{
+        type: Schema.Types.ObjectId,
+        ref: "data"
+    }],
 
 
 });
 
 // manda los datos a schema usuario
-module.exports = mongoose.model('cultivo', cultivoSchema);
+module.exports = mongoose.model('Dispositivo', dispositivoSchema);

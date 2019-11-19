@@ -22,7 +22,9 @@ process.env.TOKEN;
 // ============================
 //  Base de datos
 // ============================
+/*
 let urlDB;
+
 if (process.env.NODE_ENV === 'prod') {
     urlDB = process.env.MONGO_URI;
     console.log("PRODUCCION");
@@ -36,3 +38,4 @@ if (process.env.NODE_ENV === 'prod') {
 }
 
 process.env.URLDB = urlDB;
+*/

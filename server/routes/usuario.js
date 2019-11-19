@@ -1,8 +1,10 @@
+const mongoose = require('../config/conexion');
 const express = require('express');
-
+const router = require('express').Router();
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
-
+const sig = require('./sig.js');
 const Usuario = require('../models/usuario');
 const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
 
@@ -10,7 +12,13 @@ const app = express();
 
 
 
-app.get('/usuario/listar', (req, res) => {
+
+router.get('/usuario/nuevo', (req, res) => {
+    res.render('admregister', {});
+})
+
+router.get('/usuario/listar', (req, res, next) => {
+
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -30,18 +38,12 @@ app.get('/usuario/listar', (req, res) => {
             }
             res.render('usuarios', { usuarios: usuarios });
         });
+    /*}
+    res.redirect('/');
+    */
 
 });
-
-app.get('/usuario/nuevo', (req, res) => {
-    res.render('admregister', {
-
-    });
-
-
-})
-
-app.post('/usuario/nuevo', function(req, res) {
+router.post('/usuario/nuevo', function(req, res) {
 
     let body = req.body;
 
@@ -76,7 +78,7 @@ app.post('/usuario/nuevo', function(req, res) {
 
 });
 
-app.get('/usuario/modificar/:id', function(req, res, next) {
+router.get('/usuario/modificar/:id', function(req, res, next) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -90,16 +92,11 @@ app.get('/usuario/modificar/:id', function(req, res, next) {
             });
         }
         res.render("usuarioForm", { persona: persona });
-
-
-
-
-
     })
 
 });
 
-app.get('/usuario/eliminar/:id', function(req, res) {
+router.get('/usuario/eliminar/:id', function(req, res) {
     let id = req.params.id;
     // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
     let cambiaEstado = {
@@ -130,4 +127,4 @@ app.get('/usuario/eliminar/:id', function(req, res) {
 
 
 
-module.exports = app;
+module.exports = router;

@@ -40,9 +40,9 @@ let usuarioSchema = new Schema({
         default: 'USER_ROLE',
         enum: rolesValidos
     },
-    cultivo: [{
+    parcela: [{
         type: Schema.Types.ObjectId,
-        ref: "cultivo"
+        ref: "parcela"
     }],
 
 

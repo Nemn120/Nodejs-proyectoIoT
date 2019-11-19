@@ -53,7 +53,7 @@ socket.on('data', function(data) {
     console.log(data);
 
     let tempp = data.Temperatura;
-    let humedd = data.Humedad;
+    let humedd = data.HumedadH;
     let temp = document.getElementById('temperature').innerHTML = `Temperatura: ${tempp} °C`;
     let humed = document.getElementById('humedad').innerHTML = `Humedad: ${humedd}  % `;
     chartTemp.data.labels.push(counter);

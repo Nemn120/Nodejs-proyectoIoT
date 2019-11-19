@@ -16,7 +16,6 @@ router.post('/login', passport.authenticate('local-signin', {
 }));
 
 router.get('/register', (req, res, next) => {
-    console.log("register HGsd");
     res.render('register');
 });
 
@@ -26,6 +25,7 @@ router.post('/register', passport.authenticate('local-signup', {
     failureRedirect: '/register',
     failureFlash: true
 }));
+
 
 router.get('/panel', isAuthenticated, (req, res, next) => {
     res.render('panel');

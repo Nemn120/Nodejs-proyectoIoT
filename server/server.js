@@ -57,14 +57,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/', require('./routes/sig'));
-// conectando a la bd
-mongoose.connect(process.env.URLDB, (err, res) => {
-
-    if (err) throw err;
-
-    console.log('Base de datos ONLINE');
-
-});
 
 
 /*app.listen(process.env.PORT, () => {
@@ -109,7 +101,7 @@ io.on('connection', (socket) => {
                 console.log("Error");
             }
         });
-
+        io.emit('data', data);
 
 
     })
