@@ -50,7 +50,7 @@ var chartHumed = new Chart(ctxs, {
 
 
 socket.on('data', function(data) {
-    console.log(data);
+    console.log("TEMPERATURA: " + data.Temperatura);
 
     let tempp = data.Temperatura;
     let humedd = data.HumedadH;

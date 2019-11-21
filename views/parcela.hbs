@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GooGren IoT</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="css/business-frontpage.css" rel="stylesheet">
+    <link href="vendor/style.css" rel="stylesheet">
+
+
+</head>
+<body>
+  {{> navbar }}
+  
+    <br>
+    <br>
+       <div class="card-header bg-success text-white" text="Listado de Usuarios">
+         <br>
+         <span>"LISTADO DE PARCELAS"</span>
+       </div>
+      <div class="container py-4">
+           <a href="/parcela/nuevo" class="btn btn-primary">Agregar Parcela</a>
+        <div class="row">
+            <div class="col-md-8 mb-5">
+              <br><br>
+     <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Direccion</th>
+            <th>Largo</th>
+            <th>Ancho</th>
+            <th colspan="2">Operación</th>
+        </tr>
+        </thead>
+        {{#each parcelas}}
+          <tr class="bg-light" >
+            <td>{{this.direccion}}</td> 
+            <td>{{this.largo}}</td>
+            <td>{{this.ancho}}</td>
+            <td><a class="btn btn-secondary"  href="/parcela/modificar/{{this._id}}">Modificar</a></td> 
+            <td><a class="btn btn-danger" href="/parcela/eliminar/{{this._id}}">Eliminar</a></td> 
+          </tr>          
+       {{/each}}   
+      </table>
+      </div>
+      </div>
+  </div>
+
+
+      {{> footer}}

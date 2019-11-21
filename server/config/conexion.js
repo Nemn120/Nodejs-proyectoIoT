@@ -7,10 +7,12 @@ function BDFactory() {
 
             console.log("BASE DATOS: PRODUCCION");
             return process.env.MONGO_URI;
+
         } else {
 
             console.log("BASE DATOS: DESARROLLO");
-            return 'mongodb://localhost:27017/cafe';
+            //return 'mongodb://localhost:27017/cafe';
+            return 'mongodb+srv://user:4ozvRkeatvDCUfPf@cluster0-tzeao.mongodb.net/cafe?retryWrites=true&w=majority';
         }
 
     }

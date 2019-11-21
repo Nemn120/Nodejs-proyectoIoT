@@ -1,10 +1,10 @@
 require('./config/config');
-
 const express = require('express');
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const socketIO = require('socket.io');
 const app = express();
+//const serverr = require('http').Server(app);
+//const socketIO = require('socket.io')(serverr);
 const flash = require('connect-flash');
 var path = require('path');
 const bodyParser = require('body-parser');
@@ -20,22 +20,24 @@ app.set('view engine', 'hbs');
 require('./config/local-auth');
 
 
-
-//app.engine('ejs', engine);
-//app.set('view engine', 'ejs');
-
 app.use(cookieParser());
 app.use(express.static(__dirname));
-// parse application/x-www-form-urlencoded
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
+
 app.use(bodyParser.json());
 
+const dispositivoForm = require('./routes/dispositivoForm');
+app.use('/dispositivoForm', dispositivoForm);
+const parcelaForm = require('./routes/parcelaForm');
+app.use('/parcelaForm', parcelaForm);
 const personaForm = require('./routes/usuarioForm');
 app.use('/usuarioForm', personaForm);
-// Configuración global de rutas
-//app.use(require('./config/local-auth'));
+
+
+
+
 app.use(require('./routes/index'));
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -59,18 +61,14 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/sig'));
 
 
-/*app.listen(process.env.PORT, () => {
-    console.log('Escuchando puerto: ', process.env.PORT);
-});
-*/
 
 const server = app.listen(process.env.PORT, () => {
     console.log('server listening on port: ', 3000);
 });
 
+const Data = require('../server/models/data');
 
 const io = socketIO(server);
-const Data = require('../server/models/data');
 io.on('connection', (socket) => {
     console.log('Nueva cioneccion sokec id: ', socket.id);
     socket.on('disconnect', (socket) => {
@@ -106,4 +104,7 @@ io.on('connection', (socket) => {
 
     })
 });
+
+
+
 //require('socket.io');

@@ -43,7 +43,7 @@ var grafico = new Chart(document.getElementById("line-chart"), {
 
 
 socket.on('data', function(data) {
-
+    console.log("TEMPERATURA: " + data.Temperatura);
 
     grafico.data.labels.push(counter);
     grafico.data.datasets.forEach(dataset => {

@@ -5,6 +5,9 @@ const dispositivoSchema = new Schema({
     nombre: {
         type: String,
     },
+    modelo: {
+        type: String,
+    },
     posicion: String,
     data: [{
         type: Schema.Types.ObjectId,

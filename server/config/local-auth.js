@@ -4,7 +4,7 @@ const flash = require('connect-flash');
 const User = require('../models/usuario');
 
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user._id);
 });
 
 passport.deserializeUser(async(id, done) => {
@@ -27,7 +27,7 @@ passport.use('local-signup', new LocalStrategy({
         }
         if (usuarioDB) {
             console.log("User:" + usuarioDB);
-            return done(null, false, req.flash('signupMessage', 'The Email is already Taken.'));
+            return done(null, false, req.flash('signupMessage', 'El email ya esta en uso.'));
 
         } else {
             const newUser = new User();
@@ -60,7 +60,6 @@ passport.use('local-signin', new LocalStrategy({
     console.log(email);
     console.log(password);
 
-    //try {const user = await
     User.findOne({ email: email }, (err, usuarioDB) => {
         if (err) {
 
@@ -70,10 +69,10 @@ passport.use('local-signin', new LocalStrategy({
             });
         }
         if (!usuarioDB) {
-            return done(null, false, req.flash('signinMessage', 'No User Found'));
+            return done(null, false, req.flash('signinMessage', 'Usuario No encontrado'));
         }
         if (!usuarioDB.comparePassword(password)) {
-            return done(null, false, req.flash('signinMessage', 'Incorrect Password'));
+            return done(null, false, req.flash('signinMessage', 'Password incorrecto'));
         }
         return done(null, usuarioDB);
 
@@ -81,8 +80,4 @@ passport.use('local-signin', new LocalStrategy({
 
     });
 
-
-    // } catch (e) {
-    //  console.log('Error happend while connecting to the DB: ', e.message)
-    //}
 }));

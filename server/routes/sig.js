@@ -28,6 +28,9 @@ router.post('/register', passport.authenticate('local-signup', {
 
 
 router.get('/panel', isAuthenticated, (req, res, next) => {
+    console.log(req.params.id);
+
+
     res.render('panel');
 });
 

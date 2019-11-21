@@ -2,7 +2,13 @@ const express = require('express');
 
 const app = express();
 
+
+
+
 app.use(require('./usuario'));
+app.use(require('./parcela'));
+app.use(require('./dispositivo'));
+
 //app.use(require('./login'));
 //app.use(require('./panel'));
 //app.use(require('./register'));

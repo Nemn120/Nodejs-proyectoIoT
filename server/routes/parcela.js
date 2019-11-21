@@ -1,27 +1,27 @@
-const mongoose = require('../config/conexion');
 const express = require('express');
+const mongoose = require('../config/conexion');
 const router = require('express').Router();
-const passport = require('passport');
-const bcrypt = require('bcrypt');
 const _ = require('underscore');
-const sig = require('./sig.js');
-const Usuario = require('../models/usuario');
-const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
+const Parcela = require('../models/parcela');
+
 
 const app = express();
-router.get('/usuario/nuevo', (req, res) => {
-    res.render('admregister', {});
-})
 
-router.get('/usuario/listar', (req, res, next) => {
+router.get('/parcela/nuevo', (req, res, next) => {
+    res.render('parcelaForm', {});
+});
+
+router.get('/parcela/listar', (req, res, next) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
     let limite = req.query.limite || 10;
     limite = Number(limite);
-    Usuario.find({ estado: true }, 'nombre email role estado google img')
+    Parcela.find()
         .skip(desde)
         .limit(limite)
-        .exec((err, usuarios) => {
+        .exec((err, parcelas) => {
+
+
 
             if (err) {
                 return res.status(400).json({
@@ -29,22 +29,20 @@ router.get('/usuario/listar', (req, res, next) => {
                     err
                 });
             }
-            res.render('usuarios', { usuarios: usuarios });
+            res.render('parcela', { parcelas: parcelas });
         });
     /*}
     res.redirect('/');
     */
 });
-router.post('/usuario/nuevo', function(req, res) {
+router.post('/parcela/nuevo', function(req, res) {
     let body = req.body;
-    let usuario = new Usuario({
-        nombre: body.nombre,
-        apellido: body.apellido,
-        email: body.email,
-        password: bcrypt.hashSync(body.password, 10),
-        role: body.role
+    let parcela = new Usuario({
+        nombre: body.direccion,
+        apellido: body.largo,
+        email: body.ancho,
     });
-    usuario.save((err, usuarioDB) => {
+    parcela.save((err, usuarioDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -60,12 +58,12 @@ router.post('/usuario/nuevo', function(req, res) {
     });
 });
 
-router.get('/usuario/modificar/:id', function(req, res, next) {
+router.get('/parcela/modificar/:id', function(req, res, next) {
 
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
+    let body = _.pick(req.body, ['direccion', 'largo', 'ancho']);
 
-    Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, persona) => {
+    Parcela.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, parcela) => {
 
         if (err) {
             return res.status(400).json({
@@ -73,24 +71,21 @@ router.get('/usuario/modificar/:id', function(req, res, next) {
                 err
             });
         }
-        res.render("usuarioForm", { persona: persona });
+        res.render("parcelaForm", { parcela: parcela });
     })
 });
 
-router.get('/usuario/eliminar/:id', function(req, res) {
+router.get('/parcela/eliminar/:id', function(req, res) {
     let id = req.params.id;
     // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
-    let cambiaEstado = {
-        estado: false
-    };
-    Usuario.remove({ _id: id }, (err, usuarioBorrado) => {
+    Parcela.remove({ _id: id }, (err, parcelaborrada) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
             });
         };
-        if (!usuarioBorrado) {
+        if (!parcelaborrada) {
             return res.status(400).json({
                 ok: false,
                 err: {
@@ -98,7 +93,7 @@ router.get('/usuario/eliminar/:id', function(req, res) {
                 }
             });
         }
-        res.redirect('/usuario/listar');
+        res.redirect('/parcela/listar');
     });
 });
 
