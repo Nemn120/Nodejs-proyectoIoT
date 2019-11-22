@@ -53,7 +53,8 @@ let usuarioSchema = new Schema({
     google: {
         type: Boolean,
         default: false
-    }
+    },
+    date: { type: Date, default: Date.now }
 });
 
 usuarioSchema.methods.toJSON = function() {

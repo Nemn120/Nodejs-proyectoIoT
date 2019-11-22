@@ -13,7 +13,8 @@ const dispositivoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "data"
     }],
-
+    date: { type: Date, default: Date.now },
+    parcela: { type: String }
 
 });
 

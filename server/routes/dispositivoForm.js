@@ -3,8 +3,8 @@ let router = express.Router();
 
 let mongoose = require('./../config/conexion');
 let Dispositivo = require('./../models/dispositivo');
-
-router.post('/dipositivo/operar', (req, res, next) => {
+const { isAuthenticated } = require('../helpers/auth');
+router.post('/dipositivo/operar', isAuthenticated, (req, res, next) => {
     console.log(req.body);
 
     if (req.body._id === "") {

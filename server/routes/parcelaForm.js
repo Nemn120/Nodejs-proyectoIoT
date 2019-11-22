@@ -3,16 +3,18 @@ let router = express.Router();
 
 let mongoose = require('./../config/conexion');
 let Parcela = require('./../models/parcela');
-
-router.post('/parcela/operar', (req, res, next) => {
+const { isAuthenticated } = require('../helpers/auth');
+router.post('/parcela/operar', isAuthenticated, (req, res, next) => {
     console.log(req.body);
 
     if (req.body._id === "") {
         let parcela = new Parcela({
             direccion: req.body.direccion,
             largo: req.body.largo,
-            ancho: req.body.ancho
+            ancho: req.body.ancho,
+            user: req.user._id
         });
+        console.log(req.user._id);
 
         parcela.save();
     } else {

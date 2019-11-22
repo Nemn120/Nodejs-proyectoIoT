@@ -31,17 +31,25 @@
      <table class="table">
         <thead class="thead-dark">
         <tr>
+          <th>Dispositivo</th>
             <th>Direccion</th>
             <th>Largo</th>
             <th>Ancho</th>
+            <th>Dispositivo</th>
+
+            <!--<th>Fecha</th> -->
+
             <th colspan="2">Operación</th>
         </tr>
         </thead>
         {{#each parcelas}}
           <tr class="bg-light" >
+            <td><a class="btn btn-info"  href="/dispositivo/listar/">Ver</a></td> 
             <td>{{this.direccion}}</td> 
             <td>{{this.largo}}</td>
             <td>{{this.ancho}}</td>
+             <!--<td>{{this.date}}</td> -->
+              <td><a class="btn btn-success"  href="/dispositivo/nuevo/">Agregar</a></td> 
             <td><a class="btn btn-secondary"  href="/parcela/modificar/{{this._id}}">Modificar</a></td> 
             <td><a class="btn btn-danger" href="/parcela/eliminar/{{this._id}}">Eliminar</a></td> 
           </tr>          

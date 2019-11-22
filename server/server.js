@@ -6,7 +6,7 @@ const app = express();
 //const serverr = require('http').Server(app);
 //const socketIO = require('socket.io')(serverr);
 const flash = require('connect-flash');
-var path = require('path');
+const path = require('path');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
@@ -20,7 +20,6 @@ app.set('view engine', 'hbs');
 require('./config/local-auth');
 
 
-app.use(cookieParser());
 app.use(express.static(__dirname));
 
 
@@ -28,12 +27,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-const dispositivoForm = require('./routes/dispositivoForm');
-app.use('/dispositivoForm', dispositivoForm);
-const parcelaForm = require('./routes/parcelaForm');
-app.use('/parcelaForm', parcelaForm);
-const personaForm = require('./routes/usuarioForm');
-app.use('/usuarioForm', personaForm);
 
 
 
@@ -41,10 +34,11 @@ app.use('/usuarioForm', personaForm);
 app.use(require('./routes/index'));
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
+
 app.use(session({
-    secret: 'mysecretsession',
-    resave: false,
-    saveUninitialized: false
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -53,15 +47,24 @@ app.use(passport.session());
 app.use((req, res, next) => {
     app.locals.signinMessage = req.flash('signinMessage');
     app.locals.signupMessage = req.flash('signupMessage');
-    app.locals.user = req.user;
-    console.log(app.locals)
+    app.locals.user = req.user || null;
+    //  console.log(app.locals)
     next();
 });
 
-app.use('/', require('./routes/sig'));
 
+const dispositivoForm = require('./routes/dispositivoForm');
+app.use('/dispositivoForm', dispositivoForm);
+const parcelaForm = require('./routes/parcelaForm');
+app.use('/parcelaForm', parcelaForm);
+const personaForm = require('./routes/usuarioForm');
+app.use('/usuarioForm', personaForm);
+app.use(require('./routes/index'));
 
-
+app.use(require('./routes/usuario'));
+app.use(require('./routes/parcela'));
+app.use(require('./routes/dispositivo'));
+app.use(require('./routes/sig'));
 const server = app.listen(process.env.PORT, () => {
     console.log('server listening on port: ', 3000);
 });

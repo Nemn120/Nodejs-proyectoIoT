@@ -7,6 +7,8 @@ const dataSchema = new Schema({
     HumedadTierra: Number,
     Ph: Number,
     CO2: Number,
+    date: { type: Date, default: Date.now },
+    usuario: { type: String, required: true },
 
     //current_date: new Date()
 });

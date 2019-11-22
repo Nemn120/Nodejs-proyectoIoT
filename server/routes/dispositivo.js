@@ -3,15 +3,15 @@ const mongoose = require('../config/conexion');
 const router = require('express').Router();
 const _ = require('underscore');
 const Dispositivo = require('../models/dispositivo');
-
+const { isAuthenticated } = require('../helpers/auth');
 
 const app = express();
 
-router.get('/dispositivo/nuevo', (req, res, next) => {
+router.get('/dispositivo/nuevo', isAuthenticated, (req, res, next) => {
     res.render('dispositivoForm', {});
 });
 
-router.get('/dispositivo/listar', (req, res, next) => {
+router.get('/dispositivo/listar', isAuthenticated, (req, res, next) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
     let limite = req.query.limite || 10;
@@ -35,7 +35,7 @@ router.get('/dispositivo/listar', (req, res, next) => {
     res.redirect('/');
     */
 });
-router.post('/dispositivo/nuevo', function(req, res) {
+router.post('/dispositivo/nuevo', isAuthenticated, function(req, res) {
     let body = req.body;
     let dispositivo = new Dispositivo({
         nombre: body.nombre,
@@ -58,7 +58,7 @@ router.post('/dispositivo/nuevo', function(req, res) {
     });
 });
 
-router.get('/dispositivo/modificar/:id', function(req, res, next) {
+router.get('/dispositivo/modificar/:id', isAuthenticated, function(req, res, next) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'modelo', 'posicion']);
@@ -75,7 +75,7 @@ router.get('/dispositivo/modificar/:id', function(req, res, next) {
     })
 });
 
-router.get('/dispositivo/eliminar/:id', function(req, res) {
+router.get('/dispositivo/eliminar/:id', isAuthenticated, function(req, res) {
     let id = req.params.id;
     Dispositivo.remove({ _id: id }, (err, dispositivoBorrado) => {
         if (err) {

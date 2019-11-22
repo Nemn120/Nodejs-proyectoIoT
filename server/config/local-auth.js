@@ -4,61 +4,27 @@ const flash = require('connect-flash');
 const User = require('../models/usuario');
 
 passport.serializeUser((user, done) => {
+    console.log("IDDDDDDDDD" + user._id);
     done(null, user._id);
 });
 
-passport.deserializeUser(async(id, done) => {
-    const user = await User.findById(id);
-    done(null, user);
-});
-
-passport.use('local-signup', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
-}, async(req, email, password, done) => {
-    User.findOne({ 'email': req.body.email }, (err, usuarioDB) => {
-        if (err) {
-
-            return res.status(500).json({
-                ok: false,
-                err
-            });
-        }
-        if (usuarioDB) {
-            console.log("User:" + usuarioDB);
-            return done(null, false, req.flash('signupMessage', 'El email ya esta en uso.'));
-
-        } else {
-            const newUser = new User();
-            newUser.nombre = req.body.nombre;
-            newUser.email = req.body.email;
-            console.log("EMAIL: " + email);
-            newUser.password = newUser.encryptPassword(password);
-            console.log("USuario nuevo" + newUser);
-            newUser.save((err, usuarioDB) => {
-                if (err) {
-                    return res.status(400).json({
-                        ok: false,
-                        err
-                    });
-                }
-            });
-            done(null, newUser);
-        }
-
+passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+        console.log("ID : " + id);
+        console.log("ID user : " + user._id);
+        done(null, user);
 
     });
 
-}));
+});
 
-passport.use('local-signin', new LocalStrategy({
+
+
+passport.use(new LocalStrategy({
     usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
-}, async(req, email, password, done) => {
-    console.log(email);
-    console.log(password);
+
+}, async(email, password, done) => {
+
 
     User.findOne({ email: email }, (err, usuarioDB) => {
         if (err) {
@@ -69,9 +35,9 @@ passport.use('local-signin', new LocalStrategy({
             });
         }
         if (!usuarioDB) {
-            return done(null, false, req.flash('signinMessage', 'Usuario No encontrado'));
+            return done(null, false, { message: 'Usuario no encontrado' });
         }
-        if (!usuarioDB.comparePassword(password)) {
+        if (!(usuarioDB.comparePassword(password))) {
             return done(null, false, req.flash('signinMessage', 'Password incorrecto'));
         }
         return done(null, usuarioDB);

@@ -2,8 +2,8 @@ let express = require('express');
 let router = express.Router();
 
 let Persona = require('../models/usuario');
-
-router.post('/usuario/operar', (req, res, next) => {
+const { isAuthenticated } = require('../helpers/auth');
+router.post('/usuario/operar', isAuthenticated, (req, res, next) => {
 
     console.log("BODY: " + req.body._id);
     console.log("NOMBRE: " + req.body.nombre);

@@ -6,14 +6,16 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const sig = require('./sig.js');
 const Usuario = require('../models/usuario');
-const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
+//const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
+const { isAuthenticated } = require('../helpers/auth');
 
 const app = express();
-router.get('/usuario/nuevo', (req, res) => {
+router.get('/usuario/nuevo', isAuthenticated, (req, res) => {
     res.render('admregister', {});
-})
+});
 
-router.get('/usuario/listar', (req, res, next) => {
+
+router.get('/usuario/listar', isAuthenticated, (req, res, next) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
     let limite = req.query.limite || 10;
@@ -31,11 +33,11 @@ router.get('/usuario/listar', (req, res, next) => {
             }
             res.render('usuarios', { usuarios: usuarios });
         });
-    /*}
-    res.redirect('/');
-    */
+
+
 });
-router.post('/usuario/nuevo', function(req, res) {
+
+router.post('/usuario/nuevo', isAuthenticated, function(req, res) {
     let body = req.body;
     let usuario = new Usuario({
         nombre: body.nombre,
@@ -60,7 +62,7 @@ router.post('/usuario/nuevo', function(req, res) {
     });
 });
 
-router.get('/usuario/modificar/:id', function(req, res, next) {
+router.get('/usuario/modificar/:id', isAuthenticated, function(req, res, next) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -77,7 +79,7 @@ router.get('/usuario/modificar/:id', function(req, res, next) {
     })
 });
 
-router.get('/usuario/eliminar/:id', function(req, res) {
+router.get('/usuario/eliminar/:id', isAuthenticated, function(req, res) {
     let id = req.params.id;
     // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
     let cambiaEstado = {

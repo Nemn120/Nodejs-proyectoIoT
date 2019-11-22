@@ -12,6 +12,8 @@ const parcelaSchema = new Schema({
         ref: "dispositivo"
     }],
 
+    date: { type: Date, default: Date.now },
+    user: { type: String }
 
 
 });
