@@ -8,6 +8,8 @@ const dispositivoSchema = new Schema({
     modelo: {
         type: String,
     },
+    fabricacion: String,
+    entradas: String,
     posicion: String,
     data: [{
         type: Schema.Types.ObjectId,

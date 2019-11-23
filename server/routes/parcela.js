@@ -5,9 +5,9 @@ const _ = require('underscore');
 const Parcela = require('../models/parcela');
 const Usuario = require('../models/usuario');
 const { isAuthenticated } = require('../helpers/auth');
-
+const Dispositivo = require('../models/dispositivo');
 const app = express();
-
+var parcelId;
 router.get('/parcela/nuevo', isAuthenticated, (req, res, next) => {
     res.render('parcelaForm', {});
 });
@@ -32,14 +32,12 @@ router.get('/parcela/listar', isAuthenticated, (req, res, next) => {
         });
 });
 
-
-
 router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
 
-    let id = req.params.id;
+    parcelId = req.params.id;
     let body = _.pick(req.body, ['direccion', 'largo', 'ancho']);
 
-    Parcela.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, parcela) => {
+    Parcela.findByIdAndUpdate(parcelId, body, { new: true, runValidators: true }, (err, parcela) => {
 
         if (err) {
             return res.status(400).json({
@@ -47,12 +45,30 @@ router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
                 err
             });
         }
-        res.render("verParcela", { parcela: parcela });
+        //var dispositivoArray = Parcela.find('dispositivos');
+        //console.log(dispositivoArray);
+
+        console.log("TIPO DATO" + typeof(parcela.dispositivos));
+        //var arrayDispositivos =
+        Dispositivo.find({ parcela: parcela._id }, (err, dispositivo) => {
+
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.render("verParcela", { parcela: parcela, dispositivo: dispositivo });
+
+
+        })
+
+
+
+
     })
 });
-
-
-
 
 router.get('/parcela/modificar/:id', isAuthenticated, function(req, res, next) {
 
@@ -93,4 +109,9 @@ router.get('/parcela/eliminar/:id', isAuthenticated, function(req, res) {
     });
 });
 
-module.exports = router;
+module.exports = {
+        router,
+        parcelId
+    }
+    //  ;
+    //module.exports.parcelId = parcelId;

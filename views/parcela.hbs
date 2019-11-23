@@ -31,7 +31,7 @@
      <table class="table">
         <thead class="thead-dark">
         <tr>
-          <th>Dispositivo</th>
+          <th>Parcelas</th>
             <th>Direccion</th>
             <th>Largo</th>
             <th>Ancho</th>
@@ -44,7 +44,7 @@
         </thead>
         {{#each parcelas}}
           <tr class="bg-light" >
-            <td><a class="btn btn-info"  href="/dispositivo/listar/">Ver</a></td> 
+            <td><a class="btn btn-info"  href="/parcela/ver/{{this._id}}">Ver</a></td> 
             <td>{{this.direccion}}</td> 
             <td>{{this.largo}}</td>
             <td>{{this.ancho}}</td>

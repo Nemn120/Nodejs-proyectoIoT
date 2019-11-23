@@ -7,8 +7,10 @@ const { isAuthenticated } = require('../helpers/auth');
 
 const app = express();
 
-router.get('/dispositivo/nuevo', isAuthenticated, (req, res, next) => {
-    res.render('dispositivoForm', {});
+router.get('/dispositivo/nuevo/:id', isAuthenticated, (req, res, next) => {
+    console.log("REQ__________PARAMS " + req.params.id);
+    idParcela = req.params.id;
+    res.render('dispositivoForm', { idParcela });
 });
 
 router.get('/dispositivo/listar', isAuthenticated, (req, res, next) => {
@@ -34,28 +36,6 @@ router.get('/dispositivo/listar', isAuthenticated, (req, res, next) => {
     /*}
     res.redirect('/');
     */
-});
-router.post('/dispositivo/nuevo', isAuthenticated, function(req, res) {
-    let body = req.body;
-    let dispositivo = new Dispositivo({
-        nombre: body.nombre,
-        modelo: body.modelo,
-        posicion: body.posicion,
-    });
-    dispositivo.save((err, dispositivo) => {
-        if (err) {
-            return res.status(400).json({
-                ok: false,
-                err
-            });
-        }
-        /* res.json({
-             ok: true,
-             dispositivo: dispositivo
-         });
-         */
-        res.redirect("listar");
-    });
 });
 
 router.get('/dispositivo/modificar/:id', isAuthenticated, function(req, res, next) {

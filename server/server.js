@@ -60,9 +60,9 @@ app.use('/parcelaForm', parcelaForm);
 const personaForm = require('./routes/usuarioForm');
 app.use('/usuarioForm', personaForm);
 app.use(require('./routes/index'));
-
+var router = require('./routes/parcela');
 app.use(require('./routes/usuario'));
-app.use(require('./routes/parcela'));
+app.use(router.router);
 app.use(require('./routes/dispositivo'));
 app.use(require('./routes/sig'));
 const server = app.listen(process.env.PORT, () => {

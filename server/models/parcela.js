@@ -7,7 +7,7 @@ const parcelaSchema = new Schema({
     },
     largo: { type: String },
     ancho: { type: String },
-    dispositivo: [{
+    dispositivos: [{
         type: Schema.Types.ObjectId,
         ref: "dispositivo"
     }],

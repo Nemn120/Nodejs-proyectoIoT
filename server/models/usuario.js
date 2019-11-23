@@ -7,7 +7,6 @@ let rolesValidos = {
     message: '{VALUE} no es un rol válido'
 };
 
-
 let Schema = mongoose.Schema;
 let usuarioSchema = new Schema({
 
@@ -40,9 +39,9 @@ let usuarioSchema = new Schema({
         default: 'USER_ROLE',
         enum: rolesValidos
     },
-    parcela: [{
-        type: Schema.Types.ObjectId,
-        ref: "parcela"
+    parcelas: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'parcela'
     }],
 
 

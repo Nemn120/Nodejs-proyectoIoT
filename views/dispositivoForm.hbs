@@ -31,7 +31,7 @@
           
             <div class="card-body">
     <form action="/dispositivoForm/dipositivo/operar" method="POST">
- 
+         <input type="hidden" name="idParcela" value="{{idParcela}}"/>
         <input type="hidden" name="_id" value="{{dispositivo._id}}"/>
         <div class="form-group">
             <label  class="col-sm-2 col-form-label" for="nombre">Nombre:</label>
