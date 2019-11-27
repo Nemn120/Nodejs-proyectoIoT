@@ -14,6 +14,8 @@ router.post('/dipositivo/operar', isAuthenticated, (req, res, next) => {
             nombre: req.body.nombre,
             modelo: req.body.modelo,
             posicion: req.body.posicion,
+
+
             parcela: parcelId
 
         });

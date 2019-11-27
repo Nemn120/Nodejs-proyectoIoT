@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('../config/conexion');
+const { PythonShell } = require("python-shell");
 const router = require('express').Router();
 const _ = require('underscore');
 const Parcela = require('../models/parcela');
@@ -7,7 +8,6 @@ const Usuario = require('../models/usuario');
 const { isAuthenticated } = require('../helpers/auth');
 const Dispositivo = require('../models/dispositivo');
 const app = express();
-var parcelId;
 router.get('/parcela/nuevo', isAuthenticated, (req, res, next) => {
     res.render('parcelaForm', {});
 });
@@ -32,6 +32,31 @@ router.get('/parcela/listar', isAuthenticated, (req, res, next) => {
         });
 });
 
+var options = {
+    scriptPath: './',
+};
+
+var pyshell = new PythonShell('Analisis.py', options, {
+    mode: 'text'
+});
+
+var usuario_data = ["datas"]; // Nombre de la coleccion de un usuario
+pyshell.send(JSON.stringify(usuario_data)); //Se envia a python el nombre de la data del usuario
+
+var productos;
+pyshell.on('message', function(message) {
+    console.log(message); // Recibe el resultado final
+    productos = message.split(',');
+});
+
+pyshell.end(function(err) {
+    if (err) {
+        throw err;
+    };
+    //console.log('finished');
+});
+
+
 router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
 
     parcelId = req.params.id;
@@ -45,6 +70,7 @@ router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
                 err
             });
         }
+
         //var dispositivoArray = Parcela.find('dispositivos');
         //console.log(dispositivoArray);
 
@@ -59,7 +85,7 @@ router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
                 });
             }
 
-            res.render("verParcela", { parcela: parcela, dispositivo: dispositivo });
+            res.render("verParcela", { parcela: parcela, dispositivo: dispositivo, productos: productos });
 
 
         })
@@ -110,8 +136,7 @@ router.get('/parcela/eliminar/:id', isAuthenticated, function(req, res) {
 });
 
 module.exports = {
-        router,
-        parcelId
+        router
     }
     //  ;
     //module.exports.parcelId = parcelId;

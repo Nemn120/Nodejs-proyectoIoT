@@ -18,19 +18,9 @@ hbs.registerPartials(path.join(__dirname, "../", "/views/parciales"));
 
 app.set('view engine', 'hbs');
 require('./config/local-auth');
-
-
 app.use(express.static(__dirname));
-
-
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
-
-
-
-
-
 app.use(require('./routes/index'));
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -52,7 +42,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 const dispositivoForm = require('./routes/dispositivoForm');
 app.use('/dispositivoForm', dispositivoForm);
 const parcelaForm = require('./routes/parcelaForm');
@@ -70,9 +59,10 @@ const server = app.listen(process.env.PORT, () => {
 });
 
 const Data = require('../server/models/data');
+console.log("SERVER: " + server);
 
 const io = socketIO(server);
-io.on('connection', (socket) => {
+io.of('http://localhost:3000/parcela/ver/5dd8ae53e7793b3a6c241b5e').on('connection', (socket) => {
     console.log('Nueva cioneccion sokec id: ', socket.id);
     socket.on('disconnect', (socket) => {
         console.log('el socket se ha desconectado', socket.id);
