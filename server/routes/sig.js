@@ -37,9 +37,8 @@ router.post('/register', async(req, res) => {
             const newUser = new User();
             newUser.nombre = req.body.nombre;
             newUser.email = req.body.email;
-            console.log("EMAIL: " + email);
-            newUser.password = newUser.encryptPassword(password);
-            console.log("USuario nuevo" + newUser);
+
+            newUser.password = newUser.encryptPassword(req.body.password);
             newUser.save((err, usuarioDB) => {
                 if (err) {
                     return res.status(400).json({
