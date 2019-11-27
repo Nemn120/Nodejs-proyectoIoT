@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('../config/conexion');
-const { PythonShell } = require("python-shell");
+//const { PythonShell } = require("python-shell");
 const router = require('express').Router();
 const _ = require('underscore');
 const Parcela = require('../models/parcela');
@@ -31,7 +31,7 @@ router.get('/parcela/listar', isAuthenticated, (req, res, next) => {
             res.render('parcela', { parcelas: parcelas });
         });
 });
-
+/*
 var options = {
     scriptPath: './',
 };
@@ -55,7 +55,7 @@ pyshell.end(function(err) {
     };
     //console.log('finished');
 });
-
+*/
 
 router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
 
@@ -85,7 +85,7 @@ router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
                 });
             }
 
-            res.render("verParcela", { parcela: parcela, dispositivo: dispositivo, productos: productos });
+            res.render("verParcela", { parcela: parcela, dispositivo: dispositivo /*, productos: productos*/ });
 
 
         })
