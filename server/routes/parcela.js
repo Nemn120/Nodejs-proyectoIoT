@@ -61,16 +61,13 @@ router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
 
     parcelId = req.params.id;
     let body = _.pick(req.body, ['direccion', 'largo', 'ancho']);
-
     Parcela.findByIdAndUpdate(parcelId, body, { new: true, runValidators: true }, (err, parcela) => {
-
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
             });
         }
-
         //var dispositivoArray = Parcela.find('dispositivos');
         //console.log(dispositivoArray);
 
@@ -86,13 +83,7 @@ router.get('/parcela/ver/:id', isAuthenticated, function(req, res, next) {
             }
 
             res.render("verParcela", { parcela: parcela, dispositivo: dispositivo /*, productos: productos*/ });
-
-
         })
-
-
-
-
     })
 });
 
